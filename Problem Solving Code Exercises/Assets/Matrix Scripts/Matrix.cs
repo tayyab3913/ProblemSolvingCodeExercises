@@ -324,4 +324,133 @@ public class Matrix
         }
         return tempArray;
     }
+
+    public float AddArrayMultiples(float[] array1, float[] array2)
+    {
+        float tempFloat = 0;
+        float answer = 0;
+        for (int x = 0; x < array1.Length; x++)
+        {
+            for (int y = 0; y < array2.Length; y++)
+            {
+                tempFloat = array1[x] * array2[y];
+                answer += tempFloat;
+            }
+        }
+        return answer;
+    }
+
+    public void SetDiagnol(float number)
+    {
+        for (int x = 0; x < GetNoOfRows(); x++)
+        {
+            SetValue(x, x, number);
+        }
+    }
+
+    public void SetInverseDiagnol(float number)
+    {
+        int counter = GetNoOfRows();
+        for (int x = 0; x < GetNoOfRows(); x++)
+        {
+            SetValue(x, counter, number);
+            counter--;
+        }
+    }
+
+    public bool IsRowSame(int rowNumber)
+    {
+        if (GetNoOfColumns() < 2) return true;
+        bool tempBool = false;
+        float tempfloat = GetValue(rowNumber, 0);
+        if(tempfloat == GetValue(rowNumber, 1))
+        {
+            tempBool = true;
+        }
+        for (int x = 0; x < GetNoOfColumns(); x++)
+        {
+            if(GetValue(rowNumber, x) != tempfloat)
+            {
+                tempBool = false;
+            }
+        }
+        return tempBool;
+    }
+
+    public bool IsColumnSame(int colNumber)
+    {
+        if (GetNoOfRows() < 2) return true;
+        bool tempBool = false;
+        float tempfloat = GetValue(0, colNumber);
+        if (tempfloat == GetValue(1, colNumber))
+        {
+            tempBool = true;
+        }
+        for (int x = 0; x < GetNoOfColumns(); x++)
+        {
+            if (GetValue(x, colNumber) != tempfloat)
+            {
+                tempBool = false;
+            }
+        }
+        return tempBool;
+    }
+
+    public bool IsDiagnolSame(int rowNumber)
+    {
+        if (GetNoOfColumns() < 2 && GetNoOfRows() < 2) return true;
+        bool tempBool = false;
+        float tempfloat = GetValue(0, 0);
+        if (tempfloat == GetValue(1, 1))
+        {
+            tempBool = true;
+        }
+        for (int x = 0; x < GetNoOfRows(); x++)
+        {
+            if (GetValue(x, x) != tempfloat)
+            {
+                tempBool = false;
+            }
+        }
+        return tempBool;
+    }
+
+    public bool IsInverseDiagnolSame(int rowNumber)
+    {
+        if (GetNoOfColumns() < 2 && GetNoOfRows() < 2) return true;
+        int counter = GetNoOfRows();
+        bool tempBool = false;
+        float tempfloat = GetValue(GetNoOfRows(), GetNoOfRows());
+        if (tempfloat == GetValue(GetNoOfRows() - 1, GetNoOfRows() - 1))
+        {
+            tempBool = true;
+        }
+        for (int x = 0; x < GetNoOfRows(); x++)
+        {
+            if (GetValue(counter, counter) != tempfloat)
+            {
+                tempBool = false;
+                counter--;
+            }
+        }
+        return tempBool;
+    }
+
+    public Matrix Multiply(Matrix inputMatrix)
+    {
+        Matrix tempMatrix = new Matrix(GetNoOfRows(), inputMatrix.GetNoOfColumns());
+        float tempFloat = 0;
+        int counter = 0;
+        for (int x = 0; x < GetNoOfRows(); x++)
+        {
+            counter = 0;
+            for (int y = 0; y < GetNoOfColumns(); y++)
+            {
+                tempFloat = AddArrayMultiples(GetRow(x), GetColumn(y));
+                tempMatrix.SetValue(x, counter, tempFloat);
+                counter++;
+            }
+        }
+        return tempMatrix;
+    }
 }
